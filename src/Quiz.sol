@@ -10,7 +10,8 @@ contract Quiz{
       uint max_bet;
    }
     
-    mapping(uint => mapping(address => uint256)) public bets;
+    mapping(address => uint256)[] public bets;
+    mapping(address => uint256) public new_bet;
     uint public vault_balance;
     mapping(uint => Quiz_item) public quiz_list;
     uint private quiz_num;
@@ -57,8 +58,10 @@ contract Quiz{
         address better = msg.sender;
         require(quiz.min_bet <= bet_value, "set more value");
         require(bet_value <= quiz.max_bet, "set less value");
-
+        new_bet[better] = bet_value;
+        bets.push();
         bets[bet_quiz_id][better] += bet_value;
+        
     }
 
     function solveQuiz(uint quizId, string memory ans) public returns (bool) {
